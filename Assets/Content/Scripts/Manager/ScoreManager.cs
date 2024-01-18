@@ -7,9 +7,12 @@ namespace Content.Scripts.Manager
     {
         [SerializeField] private TextMeshProUGUI driftingScoreText;
 
+        private float _scorePoints;
+
         public void AddDriftingScore(float score)
         {
-            driftingScoreText.text += $"Score: {score}";
+            _scorePoints += score;
+            driftingScoreText.text = $"Score: {_scorePoints:###,###,000}";
         }
     }
 }

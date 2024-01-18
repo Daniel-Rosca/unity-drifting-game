@@ -70,7 +70,6 @@ namespace Content.Scripts.Controller
         [SerializeField] private bool useUI;
 
         [SerializeField] private TextMeshProUGUI carSpeedText;
-        [SerializeField] private TextMeshProUGUI driftScoreText;
 
         [Space(20)] 
         [Header("Sounds")] 
@@ -94,6 +93,7 @@ namespace Content.Scripts.Controller
         private float _localVelocityX;
         private float _initialCarEngineSoundPitch;
         private float _carSpeed;
+        private float _scorePoints;
 
         private bool _deceleratingCar;
         private bool _touchControlsSetup;
@@ -292,12 +292,22 @@ namespace Content.Scripts.Controller
             try
             {
                 var absoluteCarSpeed = Abs(_carSpeed);
-                carSpeedText.text = RoundToInt(absoluteCarSpeed).ToString();
+                carSpeedText.text = $"Speed: {RoundToInt(absoluteCarSpeed).ToString()}";
             }
             catch (Exception ex)
             {
                 Debug.LogWarning(ex);
             }
+
+            if (_carSpeed <= 0f)
+            {
+                return;
+            }
+
+            if (!_isDrifting) return;
+            _scorePoints += Time.deltaTime * 1f;
+                
+            scoreManager.AddDriftingScore(_scorePoints);
         }
         public void CarSounds()
         {
