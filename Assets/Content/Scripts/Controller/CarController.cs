@@ -694,47 +694,43 @@ namespace Content.Scripts.Controller
         public void RecoverTraction()
         {
             _isTractionLocked = false;
+    
             _driftingAxis -= Time.deltaTime / 1.5f;
-            if (_driftingAxis < 0f)
+            _driftingAxis = Max(_driftingAxis, 0f);
+    
+            var driftSlip = handbrakeDriftMultiplier * _driftingAxis;
+
+            AdjustWheelFriction(frontLeftCollider, _frontLeftWheelFriction, _frontLeftWheelExtremumSlip * driftSlip);
+            AdjustWheelFriction(frontRightCollider, _frontRightWheelFriction, _frontTightWheelExtremumSlip * driftSlip);
+            AdjustWheelFriction(rearLeftCollider, _rearLeftWheelFriction, _rearLeftWheelExtremumSlip * driftSlip);
+            AdjustWheelFriction(rearRightCollider, _rearRightWheelFriction, _rearRightWheelExtremumSlip * driftSlip);
+
+            if (_frontLeftWheelFriction.extremumSlip < _frontLeftWheelExtremumSlip)
             {
+                ResetWheelFriction(frontLeftCollider, _frontLeftWheelFriction, _frontLeftWheelExtremumSlip);
+                ResetWheelFriction(frontRightCollider, _frontRightWheelFriction, _frontTightWheelExtremumSlip);
+                ResetWheelFriction(rearLeftCollider, _rearLeftWheelFriction, _rearLeftWheelExtremumSlip);
+                ResetWheelFriction(rearRightCollider, _rearRightWheelFriction, _rearRightWheelExtremumSlip);
                 _driftingAxis = 0f;
             }
+
             if (_frontLeftWheelFriction.extremumSlip > _frontLeftWheelExtremumSlip)
             {
-                _frontLeftWheelFriction.extremumSlip =
-                    _frontLeftWheelExtremumSlip * handbrakeDriftMultiplier * _driftingAxis;
-                frontLeftCollider.sidewaysFriction = _frontLeftWheelFriction;
-
-                _frontRightWheelFriction.extremumSlip =
-                    _frontTightWheelExtremumSlip * handbrakeDriftMultiplier * _driftingAxis;
-                frontRightCollider.sidewaysFriction = _frontRightWheelFriction;
-
-                _rearLeftWheelFriction.extremumSlip =
-                    _rearLeftWheelExtremumSlip * handbrakeDriftMultiplier * _driftingAxis;
-                rearLeftCollider.sidewaysFriction = _rearLeftWheelFriction;
-
-                _rearRightWheelFriction.extremumSlip =
-                    _rearRightWheelExtremumSlip * handbrakeDriftMultiplier * _driftingAxis;
-                rearRightCollider.sidewaysFriction = _rearRightWheelFriction;
-
                 Invoke(nameof(RecoverTraction), Time.deltaTime);
             }
-            else if (_frontLeftWheelFriction.extremumSlip < _frontLeftWheelExtremumSlip)
-            {
-                _frontLeftWheelFriction.extremumSlip = _frontLeftWheelExtremumSlip;
-                frontLeftCollider.sidewaysFriction = _frontLeftWheelFriction;
-
-                _frontRightWheelFriction.extremumSlip = _frontTightWheelExtremumSlip;
-                frontRightCollider.sidewaysFriction = _frontRightWheelFriction;
-
-                _rearLeftWheelFriction.extremumSlip = _rearLeftWheelExtremumSlip;
-                rearLeftCollider.sidewaysFriction = _rearLeftWheelFriction;
-
-                _rearRightWheelFriction.extremumSlip = _rearRightWheelExtremumSlip;
-                rearRightCollider.sidewaysFriction = _rearRightWheelFriction;
-
-                _driftingAxis = 0f;
-            }
         }
+
+        private static void AdjustWheelFriction(WheelCollider wheelCollider, WheelFrictionCurve frictionCurve, float slip)
+        {
+            frictionCurve.extremumSlip = slip;
+            wheelCollider.sidewaysFriction = frictionCurve;
+        }
+
+        private static void ResetWheelFriction(WheelCollider wheelCollider, WheelFrictionCurve frictionCurve, float defaultSlip)
+        {
+            frictionCurve.extremumSlip = defaultSlip;
+            wheelCollider.sidewaysFriction = frictionCurve;
+        }
+
     }
 }
