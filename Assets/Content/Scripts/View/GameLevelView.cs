@@ -1,3 +1,4 @@
+using Content.Scripts.Controller;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,6 +11,7 @@ namespace Content.Scripts.View
         [SerializeField] private float timerDuration = 120f; // 2 minutes
         [SerializeField] private GameObject gameOverPopup;
         [SerializeField] private TextMeshProUGUI timerText;
+        [SerializeField] private CarController carController;
 
         private float _currentTimer;
         private bool _timerActive = true;
@@ -52,6 +54,7 @@ namespace Content.Scripts.View
         private void ShowPopup()
         {
             gameOverPopup.SetActive(true);
+            carController.IsInputEnabled = false;
         }
 
         public void ReturnToMainMenu()

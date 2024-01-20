@@ -1,7 +1,9 @@
 using System;
+using Content.Scripts.Data;
 using Content.Scripts.Manager;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using static UnityEngine.Mathf;
 
 namespace Content.Scripts.Controller
@@ -9,15 +11,17 @@ namespace Content.Scripts.Controller
     [RequireComponent(typeof(Rigidbody))]
     public class CarController : MonoBehaviour
     {
-        [Header("CAR")] 
-        [Range(20, 190)] 
-        [SerializeField]
-        private int maxSpeed = 90;
+        [FormerlySerializedAs("IsInputEnabled")]
+        [Header("CAR")]
+        // [Range(20, 190)] 
+        // [SerializeField] private int maxSpeed = 90;
+        [SerializeField] private bool isInputEnabled = true;
+        [SerializeField] public CarData carData;
 
         [Range(10, 120)] 
         [SerializeField] private int maxReverseSpeed = 45;
-        [Range(1, 10)] 
-        [SerializeField] private int accelerationMultiplier = 2;
+        //[Range(1, 10)] 
+        //[SerializeField] private int accelerationMultiplier = 2;
 
         [Space(10)] [Range(10, 45)] [SerializeField]
         private int maxSteeringAngle = 27;
@@ -113,9 +117,24 @@ namespace Content.Scripts.Controller
         private float _rearRightWheelExtremumSlip;
 
         #endregion
+        
+        public float CurrentSpeed { get; private set; }
+        public float CurrentAcceleration { get; private set; }
+        public bool IsInputEnabled
+        {
+            get => isInputEnabled;
+            set => isInputEnabled = value;
+        }
+
+        public CarData CarData => carData;
 
         private void Start()
         {
+            SetCarData(carData);
+            CurrentSpeed = carData.baseSpeed;
+            CurrentAcceleration = carData.baseAcceleration;
+            isInputEnabled = true;
+            
             _carRigidbody = gameObject.GetComponent<Rigidbody>();
             _carRigidbody.centerOfMass = bodyMassCenter;
 
@@ -261,6 +280,10 @@ namespace Content.Scripts.Controller
 
         private void GetInputs()
         {
+            if (!isInputEnabled)
+            {
+                return;
+            }
             if (Input.GetKey(KeyCode.W))
             {
                 CancelInvoke(nameof(DecelerateCar));
@@ -454,16 +477,16 @@ namespace Content.Scripts.Controller
             }
             else
             {
-                if (RoundToInt(_carSpeed) < maxSpeed)
+                if (RoundToInt(_carSpeed) < carData.baseSpeed)
                 {
                     frontLeftCollider.brakeTorque = 0;
-                    frontLeftCollider.motorTorque = accelerationMultiplier * 50f * _throttleAxis;
+                    frontLeftCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
                     frontRightCollider.brakeTorque = 0;
-                    frontRightCollider.motorTorque = accelerationMultiplier * 50f * _throttleAxis;
+                    frontRightCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
                     rearLeftCollider.brakeTorque = 0;
-                    rearLeftCollider.motorTorque = accelerationMultiplier * 50f * _throttleAxis;
+                    rearLeftCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
                     rearRightCollider.brakeTorque = 0;
-                    rearRightCollider.motorTorque = accelerationMultiplier * 50f * _throttleAxis;
+                    rearRightCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
                 }
                 else
                 {
@@ -503,13 +526,13 @@ namespace Content.Scripts.Controller
                 if (Abs(RoundToInt(_carSpeed)) < maxReverseSpeed)
                 {
                     frontLeftCollider.brakeTorque = 0;
-                    frontLeftCollider.motorTorque = accelerationMultiplier * 50f * _throttleAxis;
+                    frontLeftCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
                     frontRightCollider.brakeTorque = 0;
-                    frontRightCollider.motorTorque = accelerationMultiplier * 50f * _throttleAxis;
+                    frontRightCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
                     rearLeftCollider.brakeTorque = 0;
-                    rearLeftCollider.motorTorque = accelerationMultiplier * 50f * _throttleAxis;
+                    rearLeftCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
                     rearRightCollider.brakeTorque = 0;
-                    rearRightCollider.motorTorque = accelerationMultiplier * 50f * _throttleAxis;
+                    rearRightCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
                 }
                 else
                 {
@@ -731,6 +754,22 @@ namespace Content.Scripts.Controller
             frictionCurve.extremumSlip = defaultSlip;
             wheelCollider.sidewaysFriction = frictionCurve;
         }
+        
+        public void ApplySpeedUpgrade(float speedIncrease)
+        {
+            CurrentSpeed += speedIncrease;
+        }
 
+        public void ApplyAccelerationUpgrade(float accelerationIncrease)
+        {
+            CurrentAcceleration += accelerationIncrease;
+        }
+        
+        public void SetCarData(CarData data)
+        {
+            carData = data;
+            CurrentSpeed = data.baseSpeed;
+            CurrentAcceleration = data.baseAcceleration;
+        }
     }
 }

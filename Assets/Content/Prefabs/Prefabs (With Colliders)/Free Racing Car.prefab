@@ -595,9 +595,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cef36a1d4cf4c48a2b8e57ced1eff65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 90
+  carData: {fileID: 11400000, guid: e10a91880b7e38141943157152769617, type: 2}
   maxReverseSpeed: 45
-  accelerationMultiplier: 2
   maxSteeringAngle: 27
   steeringSpeed: 0.5
   brakeForce: 350
@@ -622,6 +621,7 @@ MonoBehaviour:
   useSounds: 0
   carEngineSound: {fileID: 0}
   tireScreechSound: {fileID: 0}
+  scoreManager: {fileID: 0}
 --- !u!1 &3962000127133956386
 GameObject:
   m_ObjectHideFlags: 0

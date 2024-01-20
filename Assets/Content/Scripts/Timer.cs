@@ -1,3 +1,4 @@
+using Content.Scripts.Controller;
 using TMPro;
 using UnityEngine;
 using static UnityEngine.Mathf;
