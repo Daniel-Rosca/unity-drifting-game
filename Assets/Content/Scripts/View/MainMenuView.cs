@@ -25,7 +25,10 @@ namespace Content.Scripts.View
             _playerData = SaveSystem.LoadPlayerData();
 
             if (_playerData != null) return;
-            _playerData = new PlayerData();
+            _playerData = new PlayerData
+            {
+                cash = 5000f
+            };
             SaveSystem.SavePlayerData(_playerData);
         }
 
@@ -41,7 +44,7 @@ namespace Content.Scripts.View
 
         public void OnGarageButtonClick()
         {
-            //SceneManager.LoadScene("");
+            SceneManager.LoadScene("Garage");
         }
 
         public void OnBackButtonCLick()

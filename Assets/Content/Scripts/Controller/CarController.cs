@@ -134,7 +134,6 @@ namespace Content.Scripts.Controller
             CurrentSpeed = carData.serializableData.baseSpeed;
             CurrentAcceleration = carData.serializableData.baseAcceleration;
             isInputEnabled = true;
-            
             _carRigidbody = gameObject.GetComponent<Rigidbody>();
             _carRigidbody.centerOfMass = bodyMassCenter;
 

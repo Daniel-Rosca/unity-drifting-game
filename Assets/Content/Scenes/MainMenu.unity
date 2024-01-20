@@ -910,12 +910,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4709067447144563875, guid: b8f53e4bc5128f44090435479256dc79, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4709067447144563875, guid: b8f53e4bc5128f44090435479256dc79, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1420337886}
+    - target: {fileID: 4709067447144563875, guid: b8f53e4bc5128f44090435479256dc79, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnGarageButtonClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 4709067447144563875, guid: b8f53e4bc5128f44090435479256dc79, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Content.Scripts.View.MainMenuView, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4709067447144563875, guid: b8f53e4bc5128f44090435479256dc79, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7574753087510236612, guid: b8f53e4bc5128f44090435479256dc79, type: 3}
       propertyPath: m_Name
       value: Button_Garage

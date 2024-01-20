@@ -3,7 +3,6 @@ using Content.Scripts.Manager;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using static UnityEngine.Mathf;
 
 namespace Content.Scripts.View
