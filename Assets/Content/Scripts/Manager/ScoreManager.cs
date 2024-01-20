@@ -21,15 +21,11 @@ namespace Content.Scripts.Manager
 
         private void LoadOrCreatePlayerData()
         {
-            if (_playerData == null)
-            {
-                _playerData = new PlayerData();
-                SaveSystem.SavePlayerData(_playerData);
-            }
-            else
-            {
-                _playerData = SaveSystem.LoadPlayerData();
-            }
+            _playerData = SaveSystem.LoadPlayerData();
+
+            if (_playerData != null) return;
+            _playerData = new PlayerData();
+            SaveSystem.SavePlayerData(_playerData);
         }
 
         public void AddDriftingScore(float score)

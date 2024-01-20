@@ -6,6 +6,6 @@ namespace Content.Scripts.Data
     public class PlayerData
     {
         public float cash;
-        public CarData selectedCar;
+        public SerializableCarData selectedCarData;
     }
 }

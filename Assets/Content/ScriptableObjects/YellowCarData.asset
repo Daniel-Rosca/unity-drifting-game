@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a66f4e84a09fb5141ad3c70fe8ea4272, type: 3}
   m_Name: YellowCarData
   m_EditorClassIdentifier: 
-  baseSpeed: 125
-  baseAcceleration: 5
+  serializableData:
+    baseSpeed: 125
+    baseAcceleration: 5

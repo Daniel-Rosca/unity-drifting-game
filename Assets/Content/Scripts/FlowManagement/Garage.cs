@@ -23,10 +23,11 @@ namespace Content.Scripts.FlowManagement
         private void LoadPlayerData()
         {
             _playerData = SaveSystem.LoadPlayerData();
-            if (_playerData != null)
-            {
-                carController.SetCarData(_playerData.selectedCar);
-            }
+            
+            if (_playerData == null) return;
+            var selectedCar = ScriptableObject.CreateInstance<CarData>();
+            selectedCar.Initialize(_playerData.selectedCarData.baseSpeed, _playerData.selectedCarData.baseAcceleration);
+            carController.SetCarData(selectedCar);
         }
 
         private void UpdateUI()
@@ -38,7 +39,7 @@ namespace Content.Scripts.FlowManagement
         public void UpgradeSpeed()
         {
             carController.ApplySpeedUpgrade(2f);
-            _playerData.selectedCar = carController.CarData;
+            _playerData.selectedCarData = carController.CarData.serializableData;
             SavePlayerData();
             UpdateUI();
         }
@@ -46,7 +47,7 @@ namespace Content.Scripts.FlowManagement
         public void UpgradeAcceleration()
         {
             carController.ApplyAccelerationUpgrade(1f);
-            _playerData.selectedCar = carController.CarData;
+            _playerData.selectedCarData = carController.CarData.serializableData;
             SavePlayerData();
             UpdateUI();
         }

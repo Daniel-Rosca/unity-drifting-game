@@ -838,6 +838,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1901315449}
     - target: {fileID: 8159298292693557743, guid: 133308cdb8794744caaef026bde9e1f0, type: 3}
+      propertyPath: isInputEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8159298292693557743, guid: 133308cdb8794744caaef026bde9e1f0, type: 3}
       propertyPath: maxAcceleration
       value: 600
       objectReference: {fileID: 0}
