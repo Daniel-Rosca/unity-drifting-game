@@ -25,7 +25,6 @@ namespace Content.Scripts.FlowManagement
             _playerData = SaveSystem.LoadPlayerData();
             if (_playerData != null)
             {
-                // Update car attributes based on loaded data
                 carController.SetCarData(_playerData.selectedCar);
             }
         }

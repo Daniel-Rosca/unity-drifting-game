@@ -1,7 +1,9 @@
 using Content.Scripts.Controller;
+using Content.Scripts.Manager;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using static UnityEngine.Mathf;
 
 namespace Content.Scripts.View
@@ -12,6 +14,7 @@ namespace Content.Scripts.View
         [SerializeField] private GameObject gameOverPopup;
         [SerializeField] private TextMeshProUGUI timerText;
         [SerializeField] private CarController carController;
+        [SerializeField] private ScoreManager scoreManager;
 
         private float _currentTimer;
         private bool _timerActive = true;
@@ -55,6 +58,7 @@ namespace Content.Scripts.View
         {
             gameOverPopup.SetActive(true);
             carController.IsInputEnabled = false;
+            scoreManager.EndGame();
         }
 
         public void ReturnToMainMenu()
