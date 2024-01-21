@@ -156,8 +156,8 @@ namespace Content.Scripts.FlowManagement
         {
             if (_currentCar != null)
             {
-                float totalSpeed = _selectedCarData.serializableData.baseSpeed + _selectedCarData.serializableData.upgradedSpeed;
-                float totalAcceleration = _selectedCarData.serializableData.baseAcceleration + _selectedCarData.serializableData.upgradedAcceleration;
+                var totalSpeed = _selectedCarData.serializableData.baseSpeed + _selectedCarData.serializableData.upgradedSpeed;
+                var totalAcceleration = _selectedCarData.serializableData.baseAcceleration + _selectedCarData.serializableData.upgradedAcceleration;
 
                 speedText.text = "Speed: " + totalSpeed.ToString("F1");
                 accelerationText.text = "Acceleration: " + totalAcceleration.ToString("F1");
