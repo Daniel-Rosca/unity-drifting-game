@@ -1,5 +1,4 @@
 using Photon.Pun;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Content.Scripts.Networking

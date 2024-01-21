@@ -15,8 +15,7 @@ namespace Content.Scripts.Controller
     {
         [FormerlySerializedAs("IsInputEnabled")]
         [Header("CAR")]
-        // [Range(20, 190)] 
-        // [SerializeField] private int maxSpeed = 90;
+        
         [SerializeField] private bool isInputEnabled = true;
         [SerializeField] public SerializableCarData carData;
         [SerializeField] private CinemachineVirtualCamera virtualCamera;
@@ -24,8 +23,6 @@ namespace Content.Scripts.Controller
 
         [Range(10, 120)] 
         [SerializeField] private int maxReverseSpeed = 45;
-        //[Range(1, 10)] 
-        //[SerializeField] private int accelerationMultiplier = 2;
 
         [Space(10)] [Range(10, 45)] [SerializeField]
         private int maxSteeringAngle = 27;
@@ -76,8 +73,6 @@ namespace Content.Scripts.Controller
         [Header("UI")] 
         [Space(10)] 
         [SerializeField] private bool useUI;
-
-        // [SerializeField] private TextMeshProUGUI carSpeedText;
 
         [Space(20)] 
         [Header("Sounds")] 
@@ -199,13 +194,6 @@ namespace Content.Scripts.Controller
             {
                 InvokeRepeating(nameof(ManageUI), 0f, 0.1f);
             }
-            // else
-            // {
-            //     if (carSpeedText != null)
-            //     {
-            //         carSpeedText.text = "0";
-            //     }
-            // }
 
             if (useSounds)
             {

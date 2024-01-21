@@ -1,7 +1,6 @@
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Content.Scripts.Networking
 {

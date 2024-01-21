@@ -99,9 +99,5 @@ namespace Content.Scripts.View
         {
             SceneManager.LoadScene("MainMenu");
         }
-
-        public void DoubleReward()
-        {
-        }
     }
 }
