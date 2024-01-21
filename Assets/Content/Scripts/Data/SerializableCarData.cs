@@ -18,8 +18,8 @@ namespace Content.Scripts.Data
             baseAcceleration = acceleration;
             carName = name;
             
-            upgradedSpeed = baseSpeed;
-            upgradedAcceleration = baseAcceleration;
+            upgradedSpeed = 0f;
+            upgradedAcceleration = 0f;
         }
     }
 }

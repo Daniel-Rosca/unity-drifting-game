@@ -854,6 +854,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button_SelectCar
       objectReference: {fileID: 0}
+    - target: {fileID: 7574753087510236612, guid: b8f53e4bc5128f44090435479256dc79, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1162,6 +1166,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button_CarPurple
       objectReference: {fileID: 0}
+    - target: {fileID: 7574753087510236612, guid: b8f53e4bc5128f44090435479256dc79, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1396,6 +1404,10 @@ PrefabInstance:
     - target: {fileID: 7574753087510236612, guid: b8f53e4bc5128f44090435479256dc79, type: 3}
       propertyPath: m_Name
       value: Button_CarGray
+      objectReference: {fileID: 0}
+    - target: {fileID: 7574753087510236612, guid: b8f53e4bc5128f44090435479256dc79, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1819,6 +1831,10 @@ PrefabInstance:
     - target: {fileID: 7574753087510236612, guid: b8f53e4bc5128f44090435479256dc79, type: 3}
       propertyPath: m_Name
       value: Button_CarBlue
+      objectReference: {fileID: 0}
+    - target: {fileID: 7574753087510236612, guid: b8f53e4bc5128f44090435479256dc79, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2450,6 +2466,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button_CarRed
       objectReference: {fileID: 0}
+    - target: {fileID: 7574753087510236612, guid: b8f53e4bc5128f44090435479256dc79, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -2971,7 +2991,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9727237349f2642ac60bbd9dbd8014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  availableCars: []
+  carObject: {fileID: 8159298292693557743, guid: 133308cdb8794744caaef026bde9e1f0, type: 3}
   speedText: {fileID: 258344962}
   accelerationText: {fileID: 997917658}
   carInfoText: {fileID: 728775469}
@@ -3496,6 +3516,10 @@ PrefabInstance:
     - target: {fileID: 7574753087510236612, guid: b8f53e4bc5128f44090435479256dc79, type: 3}
       propertyPath: m_Name
       value: Button_CarYellow
+      objectReference: {fileID: 0}
+    - target: {fileID: 7574753087510236612, guid: b8f53e4bc5128f44090435479256dc79, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

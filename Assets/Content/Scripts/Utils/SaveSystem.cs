@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Content.Scripts.Utils
 {
-    public class SaveSystem : MonoBehaviour
+    public static class SaveSystem
     {
         private static string _savePath = Application.persistentDataPath + "/playerData.sav";
 

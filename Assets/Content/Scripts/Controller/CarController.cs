@@ -16,7 +16,7 @@ namespace Content.Scripts.Controller
         // [Range(20, 190)] 
         // [SerializeField] private int maxSpeed = 90;
         [SerializeField] private bool isInputEnabled = true;
-        [SerializeField] public CarData carData;
+        [SerializeField] public SerializableCarData carData;
 
         [Range(10, 120)] 
         [SerializeField] private int maxReverseSpeed = 45;
@@ -128,13 +128,13 @@ namespace Content.Scripts.Controller
             set => isInputEnabled = value;
         }
 
-        public CarData CarData => carData;
+        public SerializableCarData CarData => carData;
 
         private void Start()
         {
             SetCarData(carData);
-            CurrentSpeed = carData.serializableData.baseSpeed;
-            CurrentAcceleration = carData.serializableData.baseAcceleration;
+            CurrentSpeed = carData.baseSpeed;
+            CurrentAcceleration = carData.baseAcceleration;
             isInputEnabled = true;
             _carRigidbody = gameObject.GetComponent<Rigidbody>();
             _carRigidbody.centerOfMass = bodyMassCenter;
@@ -478,16 +478,16 @@ namespace Content.Scripts.Controller
             }
             else
             {
-                if (RoundToInt(_carSpeed) < carData.serializableData.baseSpeed)
+                if (RoundToInt(_carSpeed) < carData.baseSpeed)
                 {
                     frontLeftCollider.brakeTorque = 0;
-                    frontLeftCollider.motorTorque = carData.serializableData.baseAcceleration * 50f * _throttleAxis;
+                    frontLeftCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
                     frontRightCollider.brakeTorque = 0;
-                    frontRightCollider.motorTorque = carData.serializableData.baseAcceleration * 50f * _throttleAxis;
+                    frontRightCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
                     rearLeftCollider.brakeTorque = 0;
-                    rearLeftCollider.motorTorque = carData.serializableData.baseAcceleration * 50f * _throttleAxis;
+                    rearLeftCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
                     rearRightCollider.brakeTorque = 0;
-                    rearRightCollider.motorTorque = carData.serializableData.baseAcceleration * 50f * _throttleAxis;
+                    rearRightCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
                 }
                 else
                 {
@@ -527,13 +527,13 @@ namespace Content.Scripts.Controller
                 if (Abs(RoundToInt(_carSpeed)) < maxReverseSpeed)
                 {
                     frontLeftCollider.brakeTorque = 0;
-                    frontLeftCollider.motorTorque = carData.serializableData.baseAcceleration * 50f * _throttleAxis;
+                    frontLeftCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
                     frontRightCollider.brakeTorque = 0;
-                    frontRightCollider.motorTorque = carData.serializableData.baseAcceleration * 50f * _throttleAxis;
+                    frontRightCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
                     rearLeftCollider.brakeTorque = 0;
-                    rearLeftCollider.motorTorque = carData.serializableData.baseAcceleration * 50f * _throttleAxis;
+                    rearLeftCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
                     rearRightCollider.brakeTorque = 0;
-                    rearRightCollider.motorTorque = carData.serializableData.baseAcceleration * 50f * _throttleAxis;
+                    rearRightCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
                 }
                 else
                 {
@@ -756,11 +756,11 @@ namespace Content.Scripts.Controller
             wheelCollider.sidewaysFriction = frictionCurve;
         }
         
-        public void SetCarData(CarData data)
+        public void SetCarData(SerializableCarData data)
         {
             carData = data;
-            CurrentSpeed = data.serializableData.baseSpeed;
-            CurrentAcceleration = data.serializableData.baseAcceleration;
+            CurrentSpeed = data.baseSpeed;
+            CurrentAcceleration = data.baseAcceleration;
         }
         
         public void ApplyUpgrades(float upgradedSpeed, float upgradedAcceleration)

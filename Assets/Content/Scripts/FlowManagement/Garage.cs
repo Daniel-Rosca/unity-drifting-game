@@ -9,20 +9,18 @@ namespace Content.Scripts.FlowManagement
 {
     public class Garage : MonoBehaviour
     {
-        [SerializeField] private List<CarController> availableCars = new();
+        [SerializeField] private CarController carObject;
         [SerializeField] private TextMeshProUGUI speedText;
         [SerializeField] private TextMeshProUGUI accelerationText;
         [SerializeField] private TextMeshProUGUI carInfoText;
         [SerializeField] private TextMeshProUGUI cashText;
 
         private PlayerData _playerData;
-        private CarData _selectedCarData;
         private CarController _currentCar;
 
         private void Start()
         {
             LoadPlayerData();
-            InitializeAvailableCars();
             SelectInitialCar();
             UpdateUI();
         }
@@ -31,7 +29,7 @@ namespace Content.Scripts.FlowManagement
         {
             if (_currentCar != null && CanUpgradeCar("Speed"))
             {
-                _selectedCarData.serializableData.upgradedSpeed += 2f;
+                _playerData.selectedCarData.upgradedSpeed += 2f;
 
                 DeductUpgradeCost("Speed");
 
@@ -44,7 +42,7 @@ namespace Content.Scripts.FlowManagement
         {
             if (_currentCar != null && CanUpgradeCar("Acceleration"))
             {
-                _selectedCarData.serializableData.upgradedAcceleration += 1f;
+                _playerData.selectedCarData.upgradedAcceleration += 1f;
 
                 DeductUpgradeCost("Acceleration");
 
@@ -52,90 +50,32 @@ namespace Content.Scripts.FlowManagement
                 UpdateUI();
             }
         }
-        
-        public void SelectCurrentCar()
-        {
-            if (_currentCar != null)
-            {
-                _playerData.selectedCarData = _selectedCarData.serializableData;
-                SavePlayerData();
-                Debug.Log($"Selected Car: {_selectedCarData.name}");
-            }
-            else
-            {
-                Debug.LogError("No car available in the garage.");
-            }
-        }
-
-        private void SpawnNewCar(string carName)
-        {
-            var newCarData = Resources.Load<CarData>(carName);
-
-            if (newCarData != null)
-            {
-                SpawnCar(newCarData);
-            }
-            else
-            {
-                Debug.LogError($"CarData for {carName} not found.");
-            }
-        }
-
-        private void InitializeAvailableCars()
-        {
-            var cars = Resources.LoadAll<CarController>("Cars");
-
-            foreach (var car in cars)
-            {
-                availableCars.Add(car);
-            }
-        }
 
         private void SelectInitialCar()
         {
-            if (_playerData.selectedCarData != null)
+            if (_playerData.selectedCarData == null)
             {
-                _selectedCarData = ScriptableObject.CreateInstance<CarData>();
-                _selectedCarData.Initialize(_playerData.selectedCarData.baseSpeed,
-                    _playerData.selectedCarData.baseAcceleration, _playerData.selectedCarData.carName);
-            }
-            else
-            {
-                _selectedCarData = Resources.Load<CarData>("YellowCar");
+                var data = Resources.Load<CarData>("YellowCar");
+                _playerData.selectedCarData = new SerializableCarData(data.serializableData.baseSpeed, data.serializableData.baseAcceleration, data.serializableData.carName);
             }
 
-            SpawnCar(_selectedCarData);
+            SpawnCar(_playerData.selectedCarData);
         }
 
-        private void SpawnCar(CarData carData)
+        private void SpawnCar(SerializableCarData carData)
         {
-            DestroyCurrentCar();
-
-            var selectedCar = availableCars.Find(car => car.CarData == carData);
-
-            if (selectedCar != null)
+            if (carObject != null)
             {
-                var newCar = Instantiate(selectedCar, Vector3.zero, Quaternion.identity);
+                var newCar = Instantiate(carObject, Vector3.zero, Quaternion.identity);
                 newCar.SetCarData(carData);
                 _currentCar = newCar;
-                _currentCar.ApplyUpgrades(_selectedCarData.serializableData.upgradedSpeed, _selectedCarData.serializableData.upgradedAcceleration);
-
-                _selectedCarData = carData;
+                _currentCar.ApplyUpgrades(_playerData.selectedCarData.upgradedSpeed, _playerData.selectedCarData.upgradedAcceleration);
 
                 UpdateUI();
             }
             else
             {
-                Debug.LogError($"Selected car {carData.name} is not available in the garage.");
-            }
-        }
-
-        private void DestroyCurrentCar()
-        {
-            if (_currentCar != null)
-            {
-                Destroy(_currentCar.gameObject);
-                _currentCar = null;
+                Debug.LogError($"Selected car {carData.carName} is not available in the garage.");
             }
         }
 
@@ -156,12 +96,13 @@ namespace Content.Scripts.FlowManagement
         {
             if (_currentCar != null)
             {
-                var totalSpeed = _selectedCarData.serializableData.baseSpeed + _selectedCarData.serializableData.upgradedSpeed;
-                var totalAcceleration = _selectedCarData.serializableData.baseAcceleration + _selectedCarData.serializableData.upgradedAcceleration;
+                var carData = _playerData.selectedCarData;
+                var totalSpeed = carData.baseSpeed + carData.upgradedSpeed;
+                var totalAcceleration = carData.baseAcceleration + carData.upgradedAcceleration;
 
                 speedText.text = "Speed: " + totalSpeed.ToString("F1");
                 accelerationText.text = "Acceleration: " + totalAcceleration.ToString("F1");
-                carInfoText.text = "Selected Car: " + (_selectedCarData != null ? _selectedCarData.name : "None");
+                carInfoText.text = "Selected Car: " + (carData != null ? carData.carName : "None");
                 cashText.text = $"Cash: ${_playerData.cash}";
             }
             else
