@@ -316,7 +316,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 68572649}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.16018224, y: -0.000000008492103, z: 0.0000000013780788, w: 0.9870875}
+  m_LocalRotation: {x: 0.16018224, y: 0.0000000084921, z: -0.0000000013780783, w: 0.9870875}
   m_LocalPosition: {x: 0, y: 3.5, z: -9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -426,7 +426,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 226936507}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.16018224, y: -0.000000008492103, z: 0.0000000013780788, w: 0.9870875}
+  m_LocalRotation: {x: 0.16018224, y: 0.0000000084921, z: -0.0000000013780783, w: 0.9870875}
   m_LocalPosition: {x: 0, y: 3.5, z: -9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1805,7 +1805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46eee8da26a2af745b1f76ab0fe2cf85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerDuration: 10
+  timerDuration: 120
   gameOverPopup: {fileID: 1448180814}
   timerText: {fileID: 880548251}
   carController: {fileID: 546461777}

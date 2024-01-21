@@ -15,3 +15,4 @@ MonoBehaviour:
   serializableData:
     baseSpeed: 110
     baseAcceleration: 5
+    carName: PurpleCar

@@ -7,9 +7,9 @@ namespace Content.Scripts.Data
     {
         public SerializableCarData serializableData;
 
-        public void Initialize(float speed, float acceleration)
+        public void Initialize(float speed, float acceleration, string name)
         {
-            serializableData = new SerializableCarData(speed, acceleration);
+            serializableData = new SerializableCarData(speed, acceleration, name);
         }
     }
 }

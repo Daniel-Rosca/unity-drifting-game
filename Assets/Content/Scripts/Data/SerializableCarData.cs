@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 namespace Content.Scripts.Data
 {
@@ -8,11 +7,13 @@ namespace Content.Scripts.Data
     {
         public float baseSpeed;
         public float baseAcceleration;
+        public string carName;
 
-        public SerializableCarData(float speed, float acceleration)
+        public SerializableCarData(float speed, float acceleration, string name)
         {
             baseSpeed = speed;
             baseAcceleration = acceleration;
+            carName = name;
         }
     }
 }

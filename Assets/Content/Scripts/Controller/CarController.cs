@@ -713,7 +713,7 @@ namespace Content.Scripts.Controller
             }
         }
 
-        public void RecoverTraction()
+        private void RecoverTraction()
         {
             _isTractionLocked = false;
     

@@ -4,20 +4,19 @@ using Content.Scripts.Data;
 using Content.Scripts.Utils;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Content.Scripts.FlowManagement
 {
     public class Garage : MonoBehaviour
     {
-        public TextMeshProUGUI speedText;
-        public TextMeshProUGUI accelerationText;
-        public TextMeshProUGUI carInfoText;
-        public TextMeshProUGUI cashText;
+        [SerializeField] private List<CarController> availableCars = new();
+        [SerializeField] private TextMeshProUGUI speedText;
+        [SerializeField] private TextMeshProUGUI accelerationText;
+        [SerializeField] private TextMeshProUGUI carInfoText;
+        [SerializeField] private TextMeshProUGUI cashText;
 
         private PlayerData _playerData;
         private CarData _selectedCarData;
-        [SerializeField] public List<CarController> availableCars = new();
         private CarController _currentCar;
 
         private void Start()
@@ -26,6 +25,46 @@ namespace Content.Scripts.FlowManagement
             InitializeAvailableCars();
             SelectInitialCar();
             UpdateUI();
+        }
+        
+        public void UpgradeSpeed()
+        {
+            if (_currentCar != null && CanUpgradeCar("Speed"))
+            {
+                _currentCar.ApplySpeedUpgrade(2f);
+
+                DeductUpgradeCost("Speed");
+
+                SavePlayerData();
+                UpdateUI();
+            }
+        }
+
+        public void UpgradeAcceleration()
+        {
+            if (_currentCar != null && CanUpgradeCar("Acceleration"))
+            {
+                _currentCar.ApplyAccelerationUpgrade(1f);
+
+                DeductUpgradeCost("Acceleration");
+
+                SavePlayerData();
+                UpdateUI();
+            }
+        }
+
+        private void SpawnNewCar(string carName)
+        {
+            var newCarData = Resources.Load<CarData>(carName);
+
+            if (newCarData != null)
+            {
+                SpawnCar(newCarData);
+            }
+            else
+            {
+                Debug.LogError($"CarData for {carName} not found.");
+            }
         }
 
         private void InitializeAvailableCars()
@@ -44,7 +83,7 @@ namespace Content.Scripts.FlowManagement
             {
                 _selectedCarData = ScriptableObject.CreateInstance<CarData>();
                 _selectedCarData.Initialize(_playerData.selectedCarData.baseSpeed,
-                    _playerData.selectedCarData.baseAcceleration);
+                    _playerData.selectedCarData.baseAcceleration, _playerData.selectedCarData.carName);
             }
             else
             {
@@ -112,41 +151,7 @@ namespace Content.Scripts.FlowManagement
                 Debug.LogError("No car available in the garage.");
             }
         }
-
-        public void UpgradeSpeed()
-        {
-            if (_currentCar != null && CanUpgradeCar("Speed"))
-            {
-                _currentCar.ApplySpeedUpgrade(2f);
-                SavePlayerData("Speed");
-                UpdateUI();
-            }
-        }
-
-        public void UpgradeAcceleration()
-        {
-            if (_currentCar != null && CanUpgradeCar("Acceleration"))
-            {
-                _currentCar.ApplyAccelerationUpgrade(1f);
-                SavePlayerData("Acceleration");
-                UpdateUI();
-            }
-        }
-
-        public void SpawnNewCar(string carName)
-        {
-            var newCarData = Resources.Load<CarData>(carName);
-
-            if (newCarData != null)
-            {
-                SpawnCar(newCarData);
-            }
-            else
-            {
-                Debug.LogError($"CarData for {carName} not found.");
-            }
-        }
-
+        
         private bool CanUpgradeCar(string upgradeType)
         {
             var upgradeCost = GetUpgradeCost(upgradeType);
@@ -169,19 +174,15 @@ namespace Content.Scripts.FlowManagement
                 _ => 0f
             };
         }
-
-        private void SavePlayerData(string upgradeType)
+        
+        private void DeductUpgradeCost(string upgradeType)
         {
             var upgradeCost = GetUpgradeCost(upgradeType);
-
             _playerData.cash -= upgradeCost;
+        }
 
-            if (_currentCar != null)
-            {
-                _playerData.selectedCarData.baseSpeed = _currentCar.CarData.serializableData.baseSpeed;
-                _playerData.selectedCarData.baseAcceleration = _currentCar.CarData.serializableData.baseAcceleration;
-            }
-
+        private void SavePlayerData()
+        {
             SaveSystem.SavePlayerData(_playerData);
         }
     }

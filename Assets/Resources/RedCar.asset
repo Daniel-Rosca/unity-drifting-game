@@ -15,3 +15,4 @@ MonoBehaviour:
   serializableData:
     baseSpeed: 120
     baseAcceleration: 5
+    carName: RedCar
