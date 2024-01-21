@@ -52,6 +52,20 @@ namespace Content.Scripts.FlowManagement
                 UpdateUI();
             }
         }
+        
+        public void SelectCurrentCar()
+        {
+            if (_currentCar != null)
+            {
+                _playerData.selectedCarData = _selectedCarData.serializableData;
+                SavePlayerData();
+                Debug.Log($"Selected Car: {_selectedCarData.name}");
+            }
+            else
+            {
+                Debug.LogError("No car available in the garage.");
+            }
+        }
 
         private void SpawnNewCar(string carName)
         {
