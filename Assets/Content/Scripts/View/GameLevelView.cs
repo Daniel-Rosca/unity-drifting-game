@@ -2,6 +2,7 @@ using Content.Scripts.Controller;
 using Content.Scripts.Data;
 using Content.Scripts.Manager;
 using Content.Scripts.Utils;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -26,6 +27,7 @@ namespace Content.Scripts.View
         {
             _carController = FindObjectOfType<CarController>();
             LoadPlayerData();
+            PhotonNetwork.IsMessageQueueRunning = true;
             _currentTimer = timerDuration;
             gameOverPopup.SetActive(false);
         }

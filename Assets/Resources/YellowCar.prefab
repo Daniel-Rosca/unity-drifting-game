@@ -628,7 +628,7 @@ MonoBehaviour:
   rearLeftWheelTireSkid: {fileID: 701916155060772044}
   rearRightWheelTireSkid: {fileID: 7477559467347915623}
   useUI: 1
-  useSounds: 0
+  useSounds: 1
   carEngineSound: {fileID: 0}
   tireScreechSound: {fileID: 0}
 --- !u!114 &-1781934587220190492

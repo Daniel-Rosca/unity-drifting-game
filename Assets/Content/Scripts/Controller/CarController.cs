@@ -331,7 +331,7 @@ namespace Content.Scripts.Controller
             if (!useUI) return;
             try
             {
-                var absoluteCarSpeed = Abs(_carSpeed);
+                // var absoluteCarSpeed = Abs(_carSpeed);
                 // carSpeedText.text = $"Speed: {RoundToInt(absoluteCarSpeed).ToString()}";
             }
             catch (Exception ex)

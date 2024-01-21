@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: YellowCar
   m_EditorClassIdentifier: 
   serializableData:
-    baseSpeed: 80
-    baseAcceleration: 2
+    baseSpeed: 90
+    baseAcceleration: 4
     carName: YellowCar
+    upgradedSpeed: 0
+    upgradedAcceleration: 0

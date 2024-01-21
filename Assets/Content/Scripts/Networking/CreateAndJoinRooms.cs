@@ -23,6 +23,7 @@ namespace Content.Scripts.Networking
         public override void OnJoinedRoom()
         {
             base.OnJoinedRoom();
+            PhotonNetwork.IsMessageQueueRunning = false;
 
             SceneManager.LoadScene("Level1");
         }
