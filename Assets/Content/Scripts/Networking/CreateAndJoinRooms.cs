@@ -9,6 +9,9 @@ namespace Content.Scripts.Networking
     {
         [SerializeField] private TMP_InputField createInput;
         [SerializeField] private TMP_InputField joinInput;
+        
+        [SerializeField] private GameObject levelSelectPopup;
+        [SerializeField] private GameObject hostOrJoinPopup;
 
         public void CreateRoom()
         {
@@ -25,7 +28,8 @@ namespace Content.Scripts.Networking
             base.OnJoinedRoom();
             PhotonNetwork.IsMessageQueueRunning = false;
 
-            SceneManager.LoadScene("Level1");
+            hostOrJoinPopup.SetActive(false);
+            levelSelectPopup.SetActive(true);
         }
     }
 }

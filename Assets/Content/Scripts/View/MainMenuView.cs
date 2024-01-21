@@ -1,4 +1,3 @@
-using System.Globalization;
 using Content.Scripts.Data;
 using Content.Scripts.Utils;
 using TMPro;
@@ -11,15 +10,14 @@ namespace Content.Scripts.View
     {
         [SerializeField] private TextMeshProUGUI cashText;
         [SerializeField] private GameObject levelSelectorPopup;
-        [SerializeField] private GameObject level1PopupHost;
-        [SerializeField] private GameObject level2PopupHost;
-        [SerializeField] private GameObject level3PopupHost;
+        [SerializeField] private GameObject levelPopupHost;
         
         private PlayerData _playerData;
 
         private void Start()
         {
             LoadOrCreatePlayerData();
+            levelSelectorPopup.SetActive(false);
             cashText.text = $"Cash: ${_playerData.cash}";
         }
         
@@ -37,7 +35,7 @@ namespace Content.Scripts.View
 
         public void OnPlayButtonClick()
         {
-            levelSelectorPopup.SetActive(true);
+            levelPopupHost.SetActive(true);
         }
 
         public void OnGarageButtonClick()
@@ -52,9 +50,7 @@ namespace Content.Scripts.View
 
         public void OnBackButtonCLick()
         {
-            level1PopupHost.SetActive(false);
-            level2PopupHost.SetActive(false);
-            level3PopupHost.SetActive(false);
+            levelPopupHost.SetActive(false);
         }
 
         public void OnQuitButtonClick()
@@ -64,20 +60,9 @@ namespace Content.Scripts.View
 
         public void OnLevelSelectButtonCLick(string level)
         {
-            switch (level)
-            {
-                case "Level1":
-                    level1PopupHost.SetActive(true);
-                    break;
-                case "Level2":
-                    level2PopupHost.SetActive(true);
-                    break;
-                case "Level3":
-                    level3PopupHost.SetActive(true);
-                    break;
-            }
+            levelSelectorPopup.SetActive(false);
 
-            //SceneManager.LoadScene(level);
+            SceneManager.LoadScene(level);
         }
     }
 }
