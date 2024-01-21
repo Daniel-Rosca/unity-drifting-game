@@ -31,7 +31,7 @@ namespace Content.Scripts.FlowManagement
         {
             if (_currentCar != null && CanUpgradeCar("Speed"))
             {
-                _currentCar.ApplySpeedUpgrade(2f);
+                _selectedCarData.serializableData.upgradedSpeed += 2f;
 
                 DeductUpgradeCost("Speed");
 
@@ -44,7 +44,7 @@ namespace Content.Scripts.FlowManagement
         {
             if (_currentCar != null && CanUpgradeCar("Acceleration"))
             {
-                _currentCar.ApplyAccelerationUpgrade(1f);
+                _selectedCarData.serializableData.upgradedAcceleration += 1f;
 
                 DeductUpgradeCost("Acceleration");
 
@@ -104,6 +104,7 @@ namespace Content.Scripts.FlowManagement
                 var newCar = Instantiate(selectedCar, Vector3.zero, Quaternion.identity);
                 newCar.SetCarData(carData);
                 _currentCar = newCar;
+                _currentCar.ApplyUpgrades(_selectedCarData.serializableData.upgradedSpeed, _selectedCarData.serializableData.upgradedAcceleration);
 
                 _selectedCarData = carData;
 
@@ -141,8 +142,11 @@ namespace Content.Scripts.FlowManagement
         {
             if (_currentCar != null)
             {
-                speedText.text = "Speed: " + _currentCar.CurrentSpeed.ToString("F1");
-                accelerationText.text = "Acceleration: " + _currentCar.CurrentAcceleration.ToString("F1");
+                float totalSpeed = _selectedCarData.serializableData.baseSpeed + _selectedCarData.serializableData.upgradedSpeed;
+                float totalAcceleration = _selectedCarData.serializableData.baseAcceleration + _selectedCarData.serializableData.upgradedAcceleration;
+
+                speedText.text = "Speed: " + totalSpeed.ToString("F1");
+                accelerationText.text = "Acceleration: " + totalAcceleration.ToString("F1");
                 carInfoText.text = "Selected Car: " + (_selectedCarData != null ? _selectedCarData.name : "None");
                 cashText.text = $"Cash: ${_playerData.cash}";
             }

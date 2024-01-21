@@ -98,6 +98,8 @@ namespace Content.Scripts.Controller
         private float _initialCarEngineSoundPitch;
         private float _carSpeed;
         private float _scorePoints;
+        private float _upgradedSpeed;
+        private float _upgradedAcceleration;
 
         private bool _deceleratingCar;
         private bool _touchControlsSetup;
@@ -754,21 +756,17 @@ namespace Content.Scripts.Controller
             wheelCollider.sidewaysFriction = frictionCurve;
         }
         
-        public void ApplySpeedUpgrade(float speedIncrease)
-        {
-            CurrentSpeed += speedIncrease;
-        }
-
-        public void ApplyAccelerationUpgrade(float accelerationIncrease)
-        {
-            CurrentAcceleration += accelerationIncrease;
-        }
-        
         public void SetCarData(CarData data)
         {
             carData = data;
             CurrentSpeed = data.serializableData.baseSpeed;
             CurrentAcceleration = data.serializableData.baseAcceleration;
+        }
+        
+        public void ApplyUpgrades(float upgradedSpeed, float upgradedAcceleration)
+        {
+            _upgradedSpeed = upgradedSpeed;
+            _upgradedAcceleration = upgradedAcceleration;
         }
     }
 }
