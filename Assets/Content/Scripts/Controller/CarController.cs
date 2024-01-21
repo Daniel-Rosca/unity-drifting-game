@@ -84,7 +84,6 @@ namespace Content.Scripts.Controller
         [Space(10)] 
         [SerializeField] private bool useSounds;
 
-        [SerializeField] private AudioSource carEngineSound;
         [SerializeField] private AudioSource tireScreechSound;
 
         [Space(20)] 
@@ -190,11 +189,6 @@ namespace Content.Scripts.Controller
             _rearRightWheelFriction.asymptoteValue = friction1.asymptoteValue;
             _rearRightWheelFriction.stiffness = friction1.stiffness;
 
-            if (carEngineSound != null)
-            {
-                _initialCarEngineSoundPitch = carEngineSound.pitch;
-            }
-
             if (useUI)
             {
                 InvokeRepeating(nameof(ManageUI), 0f, 0.1f);
@@ -213,10 +207,6 @@ namespace Content.Scripts.Controller
             }
             else
             {
-                if (carEngineSound != null)
-                {
-                    carEngineSound.Stop();
-                }
 
                 if (tireScreechSound != null)
                 {
@@ -356,12 +346,6 @@ namespace Content.Scripts.Controller
                 case true:
                     try
                     {
-                        if (carEngineSound != null)
-                        {
-                            var engineSoundPitch =
-                                _initialCarEngineSoundPitch + (Abs(_carRigidbody.velocity.magnitude) / 25f);
-                            carEngineSound.pitch = engineSoundPitch;
-                        }
 
                         if (_isDrifting || (_isTractionLocked && Abs(_carSpeed) > 12f))
                         {
@@ -383,11 +367,6 @@ namespace Content.Scripts.Controller
                     break;
                 case false:
                 {
-                    if (carEngineSound != null && carEngineSound.isPlaying)
-                    {
-                        carEngineSound.Stop();
-                    }
-
                     if (tireScreechSound != null && tireScreechSound.isPlaying)
                     {
                         tireScreechSound.Stop();

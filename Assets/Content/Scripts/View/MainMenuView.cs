@@ -57,6 +57,11 @@ namespace Content.Scripts.View
             level3PopupHost.SetActive(false);
         }
 
+        public void OnQuitButtonClick()
+        {
+            Application.Quit();
+        }
+
         public void OnLevelSelectButtonCLick(string level)
         {
             switch (level)
