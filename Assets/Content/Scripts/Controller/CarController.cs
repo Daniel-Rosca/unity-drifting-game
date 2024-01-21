@@ -1,6 +1,8 @@
 using System;
+using Cinemachine;
 using Content.Scripts.Data;
 using Content.Scripts.Manager;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -17,6 +19,8 @@ namespace Content.Scripts.Controller
         // [SerializeField] private int maxSpeed = 90;
         [SerializeField] private bool isInputEnabled = true;
         [SerializeField] public SerializableCarData carData;
+        [SerializeField] private CinemachineVirtualCamera virtualCamera;
+        [SerializeField] private GameObject carObject;
 
         [Range(10, 120)] 
         [SerializeField] private int maxReverseSpeed = 45;
@@ -73,7 +77,7 @@ namespace Content.Scripts.Controller
         [Space(10)] 
         [SerializeField] private bool useUI;
 
-        [SerializeField] private TextMeshProUGUI carSpeedText;
+        // [SerializeField] private TextMeshProUGUI carSpeedText;
 
         [Space(20)] 
         [Header("Sounds")] 
@@ -84,7 +88,7 @@ namespace Content.Scripts.Controller
         [SerializeField] private AudioSource tireScreechSound;
 
         [Space(20)] 
-        [SerializeField] private ScoreManager scoreManager;
+        private ScoreManager _scoreManager;
 
         #region Private fields
 
@@ -119,6 +123,8 @@ namespace Content.Scripts.Controller
         private float _rearRightWheelExtremumSlip;
 
         #endregion
+
+        private PhotonView _photonView;
         
         public float CurrentSpeed { get; private set; }
         public float CurrentAcceleration { get; private set; }
@@ -132,10 +138,18 @@ namespace Content.Scripts.Controller
 
         private void Start()
         {
+            _photonView = GetComponent<PhotonView>();
+            _scoreManager = FindObjectOfType<ScoreManager>();
             SetCarData(carData);
             CurrentSpeed = carData.baseSpeed;
             CurrentAcceleration = carData.baseAcceleration;
             isInputEnabled = true;
+
+            if (_photonView.IsMine)
+            {
+                virtualCamera.gameObject.SetActive(true);
+            }
+            
             _carRigidbody = gameObject.GetComponent<Rigidbody>();
             _carRigidbody.centerOfMass = bodyMassCenter;
 
@@ -185,13 +199,13 @@ namespace Content.Scripts.Controller
             {
                 InvokeRepeating(nameof(ManageUI), 0f, 0.1f);
             }
-            else
-            {
-                if (carSpeedText != null)
-                {
-                    carSpeedText.text = "0";
-                }
-            }
+            // else
+            // {
+            //     if (carSpeedText != null)
+            //     {
+            //         carSpeedText.text = "0";
+            //     }
+            // }
 
             if (useSounds)
             {
@@ -240,6 +254,7 @@ namespace Content.Scripts.Controller
 
             _localVelocityZ = transform.InverseTransformDirection(_carRigidbody.velocity).z;
 
+            if (!_photonView.IsMine) return;
             GetInputs();
 
             HandleBrake();
@@ -262,6 +277,7 @@ namespace Content.Scripts.Controller
             }
             
             AnimateWheelMeshes();
+
         }
 
         private void HandleBrake()
@@ -316,7 +332,7 @@ namespace Content.Scripts.Controller
             try
             {
                 var absoluteCarSpeed = Abs(_carSpeed);
-                carSpeedText.text = $"Speed: {RoundToInt(absoluteCarSpeed).ToString()}";
+                // carSpeedText.text = $"Speed: {RoundToInt(absoluteCarSpeed).ToString()}";
             }
             catch (Exception ex)
             {
@@ -331,7 +347,7 @@ namespace Content.Scripts.Controller
             if (!_isDrifting) return;
             _scorePoints += Time.deltaTime * 1f;
                 
-            scoreManager.AddDriftingScore(_scorePoints);
+            _scoreManager.AddDriftingScore(_scorePoints);
         }
         public void CarSounds()
         {

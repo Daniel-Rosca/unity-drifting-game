@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Content/Scenes/InitScenePlayFromThis.unity
+    guid: f66a9f3d091621c45a182f2b3d90bdeb
+  - enabled: 1
     path: Assets/Content/Scenes/MainMenu.unity
     guid: db3fc242e9164e94eaaf7172d0492a9d
   - enabled: 1
@@ -13,10 +16,10 @@ EditorBuildSettings:
     guid: bf8b750ebb736e64b84cb2f49800d5ab
   - enabled: 1
     path: Assets/Content/Scenes/Gameplay Levels/Level2.unity
-    guid: eb1e0e94267472e469c9878ee58af9d1
+    guid: 229d5f329ae40994987a4847370ee7dc
   - enabled: 1
     path: Assets/Content/Scenes/Gameplay Levels/Level3.unity
-    guid: 89a9f7c167e7a08488fcf553c07d9abd
+    guid: f09c25853dde71244a1f391767789e02
   - enabled: 1
     path: Assets/Content/Scenes/Garage.unity
     guid: 53c0fc2d9612a954e9ec9792da7f8e7b

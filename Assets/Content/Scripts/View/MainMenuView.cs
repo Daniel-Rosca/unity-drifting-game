@@ -11,6 +11,9 @@ namespace Content.Scripts.View
     {
         [SerializeField] private TextMeshProUGUI cashText;
         [SerializeField] private GameObject levelSelectorPopup;
+        [SerializeField] private GameObject level1PopupHost;
+        [SerializeField] private GameObject level2PopupHost;
+        [SerializeField] private GameObject level3PopupHost;
         
         private PlayerData _playerData;
 
@@ -37,24 +40,39 @@ namespace Content.Scripts.View
             levelSelectorPopup.SetActive(true);
         }
 
-        public void OnSettingsButtonClick()
-        {
-            //SceneManager.LoadScene("");
-        }
-
         public void OnGarageButtonClick()
         {
             SceneManager.LoadScene("Garage");
         }
 
-        public void OnBackButtonCLick()
+        public void OnLevelSelectorBackButtonClick()
         {
             levelSelectorPopup.SetActive(false);
         }
 
+        public void OnBackButtonCLick()
+        {
+            level1PopupHost.SetActive(false);
+            level2PopupHost.SetActive(false);
+            level3PopupHost.SetActive(false);
+        }
+
         public void OnLevelSelectButtonCLick(string level)
         {
-            SceneManager.LoadScene(level);
+            switch (level)
+            {
+                case "Level1":
+                    level1PopupHost.SetActive(true);
+                    break;
+                case "Level2":
+                    level2PopupHost.SetActive(true);
+                    break;
+                case "Level3":
+                    level3PopupHost.SetActive(true);
+                    break;
+            }
+
+            //SceneManager.LoadScene(level);
         }
     }
 }

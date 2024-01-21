@@ -14,8 +14,9 @@ namespace Content.Scripts.View
         [SerializeField] private float timerDuration = 120f; // 2 minutes
         [SerializeField] private GameObject gameOverPopup;
         [SerializeField] private TextMeshProUGUI timerText;
-        [SerializeField] private CarController carController;
         [SerializeField] private ScoreManager scoreManager;
+        
+        private CarController _carController;
 
         private float _currentTimer;
         private bool _timerActive = true;
@@ -23,6 +24,7 @@ namespace Content.Scripts.View
 
         private void Start()
         {
+            _carController = FindObjectOfType<CarController>();
             LoadPlayerData();
             _currentTimer = timerDuration;
             gameOverPopup.SetActive(false);
@@ -59,8 +61,8 @@ namespace Content.Scripts.View
 
         private void LoadUpgrades(SerializableCarData carData)
         {
-            carController.SetCarData(carData);
-            carController.ApplyUpgrades(_playerData.selectedCarData.upgradedSpeed, _playerData.selectedCarData.upgradedAcceleration);
+            _carController.SetCarData(carData);
+            _carController.ApplyUpgrades(_playerData.selectedCarData.upgradedSpeed, _playerData.selectedCarData.upgradedAcceleration);
         }
 
         private void UpdateTimer()
@@ -87,7 +89,7 @@ namespace Content.Scripts.View
         private void ShowPopup()
         {
             gameOverPopup.SetActive(true);
-            carController.IsInputEnabled = false;
+            _carController.IsInputEnabled = false;
             scoreManager.EndGame();
         }
 
