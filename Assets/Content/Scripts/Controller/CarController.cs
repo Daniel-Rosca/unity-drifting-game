@@ -478,16 +478,16 @@ namespace Content.Scripts.Controller
             }
             else
             {
-                if (RoundToInt(_carSpeed) < carData.baseSpeed)
+                if (RoundToInt(_carSpeed) < (carData.baseSpeed + carData.upgradedSpeed))
                 {
                     frontLeftCollider.brakeTorque = 0;
-                    frontLeftCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
+                    frontLeftCollider.motorTorque = (carData.baseAcceleration + carData.upgradedAcceleration) * 50f * _throttleAxis;
                     frontRightCollider.brakeTorque = 0;
-                    frontRightCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
+                    frontRightCollider.motorTorque = (carData.baseAcceleration + carData.upgradedAcceleration) * 50f * _throttleAxis;
                     rearLeftCollider.brakeTorque = 0;
-                    rearLeftCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
+                    rearLeftCollider.motorTorque = (carData.baseAcceleration + carData.upgradedAcceleration) * 50f * _throttleAxis;
                     rearRightCollider.brakeTorque = 0;
-                    rearRightCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
+                    rearRightCollider.motorTorque = (carData.baseAcceleration + carData.upgradedAcceleration) * 50f * _throttleAxis;
                 }
                 else
                 {
@@ -527,13 +527,13 @@ namespace Content.Scripts.Controller
                 if (Abs(RoundToInt(_carSpeed)) < maxReverseSpeed)
                 {
                     frontLeftCollider.brakeTorque = 0;
-                    frontLeftCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
+                    frontLeftCollider.motorTorque = (carData.baseAcceleration + carData.upgradedAcceleration) * 50f * _throttleAxis;
                     frontRightCollider.brakeTorque = 0;
-                    frontRightCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
+                    frontRightCollider.motorTorque = (carData.baseAcceleration + carData.upgradedAcceleration) * 50f * _throttleAxis;
                     rearLeftCollider.brakeTorque = 0;
-                    rearLeftCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
+                    rearLeftCollider.motorTorque = (carData.baseAcceleration + carData.upgradedAcceleration) * 50f * _throttleAxis;
                     rearRightCollider.brakeTorque = 0;
-                    rearRightCollider.motorTorque = carData.baseAcceleration * 50f * _throttleAxis;
+                    rearRightCollider.motorTorque = (carData.baseAcceleration + carData.upgradedAcceleration) * 50f * _throttleAxis;
                 }
                 else
                 {

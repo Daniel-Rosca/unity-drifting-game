@@ -1,5 +1,7 @@
 using Content.Scripts.Controller;
+using Content.Scripts.Data;
 using Content.Scripts.Manager;
+using Content.Scripts.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,9 +19,11 @@ namespace Content.Scripts.View
 
         private float _currentTimer;
         private bool _timerActive = true;
+        private PlayerData _playerData;
 
         private void Start()
         {
+            LoadPlayerData();
             _currentTimer = timerDuration;
             gameOverPopup.SetActive(false);
         }
@@ -30,6 +34,33 @@ namespace Content.Scripts.View
             {
                 UpdateTimer();
             }
+        }
+        
+        private void LoadPlayerData()
+        {
+            _playerData = SaveSystem.LoadPlayerData();
+            
+            if (_playerData.selectedCarData == null)
+            {
+                var data = Resources.Load<CarData>("YellowCar");
+                _playerData.selectedCarData = new SerializableCarData(data.serializableData.baseSpeed, data.serializableData.baseAcceleration, data.serializableData.carName);
+            }
+            
+            LoadUpgrades(_playerData.selectedCarData);
+
+            if (_playerData == null)
+            {
+                _playerData = new PlayerData
+                {
+                    cash = 5000f
+                };
+            }
+        }
+
+        private void LoadUpgrades(SerializableCarData carData)
+        {
+            carController.SetCarData(carData);
+            carController.ApplyUpgrades(_playerData.selectedCarData.upgradedSpeed, _playerData.selectedCarData.upgradedAcceleration);
         }
 
         private void UpdateTimer()
