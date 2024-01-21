@@ -4,6 +4,7 @@ using Content.Scripts.Data;
 using Content.Scripts.Utils;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Content.Scripts.FlowManagement
 {
@@ -49,6 +50,11 @@ namespace Content.Scripts.FlowManagement
                 SavePlayerData();
                 UpdateUI();
             }
+        }
+
+        public void OnBackToMainMenuButtonClick()
+        {
+            SceneManager.LoadScene("MainMenu");
         }
 
         private void SelectInitialCar()
