@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Content.Scripts.Controller;
 using Content.Scripts.Data;
 using Content.Scripts.Utils;
@@ -15,6 +14,12 @@ namespace Content.Scripts.FlowManagement
         [SerializeField] private TextMeshProUGUI accelerationText;
         [SerializeField] private TextMeshProUGUI carInfoText;
         [SerializeField] private TextMeshProUGUI cashText;
+        [SerializeField] private TextMeshProUGUI speedCostText;
+        [SerializeField] private TextMeshProUGUI accelerationCostText;
+        
+        [Header("Upgrade Cost")]
+        [SerializeField] private float speedUpgradePrice;
+        [SerializeField] private float accelerationUpgradePrice;
 
         private PlayerData _playerData;
         private CarController _currentCar;
@@ -93,7 +98,7 @@ namespace Content.Scripts.FlowManagement
             {
                 _playerData = new PlayerData
                 {
-                    cash = 5000f
+                    cash = 0f
                 };
             }
         }
@@ -110,6 +115,8 @@ namespace Content.Scripts.FlowManagement
                 accelerationText.text = "Acceleration: " + totalAcceleration.ToString("F1");
                 carInfoText.text = "Selected Car: " + (carData != null ? carData.carName : "None");
                 cashText.text = $"Cash: ${_playerData.cash}";
+                speedCostText.text = $"${speedUpgradePrice}";
+                accelerationCostText.text = $"${accelerationUpgradePrice}";
             }
             else
             {
@@ -130,12 +137,12 @@ namespace Content.Scripts.FlowManagement
             return false;
         }
 
-        private static float GetUpgradeCost(string upgradeType)
+        private float GetUpgradeCost(string upgradeType)
         {
             return upgradeType switch
             {
-                "Speed" => 30f,
-                "Acceleration" => 50f,
+                "Speed" => speedUpgradePrice,
+                "Acceleration" => accelerationUpgradePrice,
                 _ => 0f
             };
         }
